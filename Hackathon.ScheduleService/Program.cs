@@ -13,11 +13,36 @@ builder.Services.AddDbContext<AppDbContext>(opt =>
 
 var app = builder.Build();
 
+
 using (var scope = app.Services.CreateScope())
 {
     var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
-    db.Database.Migrate(); //Aplica todas as migrações existentes automaticamente
-    // ou: db.Database.EnsureCreated(); //Cria o banco e tabelas se ainda não existir, sem histórico de migrações
+
+    var maxRetries = 10;
+    var delay = 5000;
+
+    for (int attempt = 1; attempt <= maxRetries; attempt++)
+    {
+        try
+        {
+            Console.WriteLine($"Tentativa {attempt} de conectar ao banco...");
+            db.Database.Migrate();
+            Console.WriteLine("Migração concluída!");
+            break;
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Erro ao conectar ao banco: {ex.Message}");
+
+            if (attempt == maxRetries)
+            {
+                Console.WriteLine("Número máximo de tentativas atingido.");
+                throw;
+            }
+
+            Thread.Sleep(delay);
+        }
+    }
 }
 
 app.UseSwagger();
