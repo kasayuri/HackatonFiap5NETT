@@ -1,14 +1,10 @@
-# This workflow will build a .NET project
-# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-net
-
 name: Build and Push to GHCR
 
 on:
   push:
-    branches: [ "master" ]
-  pull_request:
-    branches: [ "master" ]
-    
+    branches: [ "main" ]
+  workflow_dispatch:
+
 env:
   IMAGE_NAME: ghcr.io/${{ github.repository_owner }}/hackathon-auth
 
@@ -37,8 +33,7 @@ jobs:
     - name: Build and push Docker image
       uses: docker/build-push-action@v5
       with:
-        context: ./Hackathon.Auth
-        file: ./Hackathon.Auth/Dockerfile
+        context: ./Hackathon.AuthService
+        file: ./Hackathon.AuthService/Dockerfile
         push: true
         tags: ${{ env.IMAGE_NAME }}:latest
-
