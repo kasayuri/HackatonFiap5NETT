@@ -1,0 +1,64 @@
+services:
+
+  sqlexpress:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    container_name: sqlexpress
+    environment:
+      SA_PASSWORD: "YourStrong!Passw0rd"
+      ACCEPT_EULA: "Y"
+    ports:
+    - "14330:1433"  # Porta externa 14330, interna continua 1433
+    networks:
+      - mednet
+
+  hackathon-auth-service:
+    build: ./Hackathon.AuthService
+    ports:
+      - "5001:80"
+    depends_on:
+      - sqlexpress
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+    networks:
+      - mednet
+
+  hackathon-user-service:
+    build: ./Hackathon.UserService
+    ports:
+      - "5002:80"
+    depends_on:
+      - sqlexpress
+    networks:
+      - mednet
+
+  hackathon-schedule-service:
+    build: ./Hackathon.ScheduleService
+    ports:
+      - "5003:80"
+    depends_on:
+      - sqlexpress
+    networks:
+      - mednet
+
+  hackathon-consultation-service:
+    build: ./Hackathon.ConsultationService
+    ports:
+      - "5004:80"
+    depends_on:
+      - sqlexpress
+    networks:
+      - mednet
+
+  prometheus:
+    image: prom/prometheus
+    container_name: prometheus
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml
+    networks:
+      - mednet
+
+networks:
+  mednet:
+    driver: bridge

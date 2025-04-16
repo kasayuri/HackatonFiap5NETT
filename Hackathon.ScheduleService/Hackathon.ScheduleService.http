@@ -1,0 +1,6 @@
+@Hackathon.ScheduleService_HostAddress = http://localhost:5062
+
+GET {{Hackathon.ScheduleService_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

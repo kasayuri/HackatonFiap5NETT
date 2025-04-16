@@ -1,0 +1,19 @@
+global:
+  scrape_interval: 5s
+
+scrape_configs:
+  - job_name: 'hackathon-auth-service'
+    static_configs:
+      - targets: ['hackathon-auth-service:80']
+
+  - job_name: 'hackathon-user-service'
+    static_configs:
+      - targets: ['hackathon-user-service:80']
+
+  - job_name: 'hackathon-schedule-service'
+    static_configs:
+      - targets: ['hackathon-schedule-service:80']
+
+  - job_name: 'hackathon-consultation-service'
+    static_configs:
+      - targets: ['hackathon-consultation-service:80']
