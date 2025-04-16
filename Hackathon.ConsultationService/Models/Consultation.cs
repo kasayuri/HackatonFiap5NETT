@@ -2,7 +2,7 @@
 
 public class Consultation
 {
-    public int Id { get; set; }
+    public Guid Id { get; set; }
     public string MedicoCRM { get; set; }
     public string PacienteDocumento { get; set; } // CPF ou email
     public DateTime DataHora { get; set; }

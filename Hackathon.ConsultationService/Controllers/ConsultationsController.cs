@@ -1,33 +1,69 @@
 using Microsoft.AspNetCore.Mvc;
+using Hackathon.ConsultationService.Data;
+using Hackathon.ConsultationService.DTOs;
+using Hackathon.ConsultationService.Models;
 
-namespace Hackathon.ConsltationService.Controllers
+namespace ConsultationService.Controllers;
+
+[ApiController]
+[Route("api/[controller]")]
+public class ConsultationsController : ControllerBase
 {
-    [ApiController]
-    [Route("[controller]")]
-    public class ConsultationsController : ControllerBase
+    private readonly AppDbContext _context;
+    public ConsultationsController(AppDbContext context) => _context = context;
+
+    [HttpPost]
+    public IActionResult Create(CreateConsultationDto dto)
     {
-        private static readonly string[] Summaries = new[]
+        var consulta = new Consultation
         {
-            "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
+            MedicoCRM = dto.MedicoCRM,
+            PacienteDocumento = dto.PacienteDocumento,
+            DataHora = dto.DataHora,
+            Status = "pendente"
         };
 
-        private readonly ILogger<ConsultationsController> _logger;
+        _context.Consultations.Add(consulta);
+        _context.SaveChanges();
 
-        public ConsultationsController(ILogger<ConsultationsController> logger)
-        {
-            _logger = logger;
-        }
+        return Ok(consulta);
+    }
 
-        [HttpGet(Name = "GetWeatherForecast")]
-        public IEnumerable<WeatherForecast> Get()
-        {
-            return Enumerable.Range(1, 5).Select(index => new WeatherForecast
-            {
-                Date = DateOnly.FromDateTime(DateTime.Now.AddDays(index)),
-                TemperatureC = Random.Shared.Next(-20, 55),
-                Summary = Summaries[Random.Shared.Next(Summaries.Length)]
-            })
-            .ToArray();
-        }
+    [HttpPut("{id}/resposta")]
+    public IActionResult Responder(int id, [FromQuery] string status)
+    {
+        var consulta = _context.Consultations.Find(id);
+        if (consulta == null) return NotFound();
+
+        if (status != "aceita" && status != "recusada")
+            return BadRequest("Status inválido");
+
+        consulta.Status = status;
+        _context.SaveChanges();
+
+        return Ok(consulta);
+    }
+
+    [HttpPut("{id}/cancelar")]
+    public IActionResult Cancelar(int id, [FromQuery] string justificativa)
+    {
+        var consulta = _context.Consultations.Find(id);
+        if (consulta == null) return NotFound();
+
+        consulta.Status = "cancelada";
+        consulta.JustificativaCancelamento = justificativa;
+        _context.SaveChanges();
+
+        return Ok(consulta);
+    }
+
+    [HttpGet("medico/{crm}")]
+    public IActionResult GetByMedico(string crm)
+    {
+        var consultas = _context.Consultations
+            .Where(c => c.MedicoCRM == crm)
+            .ToList();
+
+        return Ok(consultas);
     }
 }
