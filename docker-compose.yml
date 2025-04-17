@@ -18,7 +18,7 @@ services:
     depends_on:
       - sqlexpress
     environment:
-      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_ENVIRONMENT=Production
     networks:
       - mednet
 
@@ -28,6 +28,8 @@ services:
       - "5002:80"
     depends_on:
       - sqlexpress
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Production
     networks:
       - mednet
 
@@ -37,6 +39,8 @@ services:
       - "5003:80"
     depends_on:
       - sqlexpress
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Production
     networks:
       - mednet
 
@@ -46,6 +50,8 @@ services:
       - "5004:80"
     depends_on:
       - sqlexpress
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Production
     networks:
       - mednet
 
