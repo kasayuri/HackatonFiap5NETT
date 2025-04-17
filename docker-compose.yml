@@ -13,6 +13,7 @@ services:
 
   hackathon-auth-service:
     build: ./Hackathon.AuthService
+    container_name: hackathon-auth-service
     ports:
       - "5001:80"
     depends_on:
@@ -24,6 +25,7 @@ services:
 
   hackathon-user-service:
     build: ./Hackathon.UserService
+    container_name: hackathon-user-service
     ports:
       - "5002:80"
     depends_on:
@@ -35,6 +37,7 @@ services:
 
   hackathon-schedule-service:
     build: ./Hackathon.ScheduleService
+    container_name: hackathon-schedule-service
     ports:
       - "5003:80"
     depends_on:
@@ -46,6 +49,7 @@ services:
 
   hackathon-consultation-service:
     build: ./Hackathon.ConsultationService
+    container_name: hackathon-consultation-service
     ports:
       - "5004:80"
     depends_on:
