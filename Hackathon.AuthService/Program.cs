@@ -17,10 +17,10 @@ builder.Services.AddSwaggerGen(c =>
     {
         Title = "Auth Service API",
         Version = "v1",
-        Description = "Microsserviço de autenticação"
+        Description = "Microsserviï¿½o de autenticaï¿½ï¿½o"
     });
 
-    // Configuração para aceitar JWT no Swagger
+    // Configuraï¿½ï¿½o para aceitar JWT no Swagger
     var jwtSecurityScheme = new OpenApiSecurityScheme
     {
         Scheme = "bearer",
@@ -64,7 +64,6 @@ builder.Services.AddDbContext<AppDbContext>(opt =>
 var app = builder.Build();
 
 app.UseHttpMetrics(); // Prometheus  
-app.MapMetrics();     // Prometheus  
 
 app.UseSwagger();
 app.UseSwaggerUI(c =>
@@ -76,7 +75,9 @@ app.UseSwaggerUI(c =>
 app.UseRouting();
 app.UseAuthentication();
 app.UseAuthorization();
+
 app.MapControllers();
+app.MapMetrics();     // Prometheus  
 
 using (var scope = app.Services.CreateScope())
 {
@@ -91,7 +92,7 @@ using (var scope = app.Services.CreateScope())
         {
             Console.WriteLine($"Tentativa {attempt} de conectar ao banco...");
             db.Database.Migrate();
-            Console.WriteLine("Migração concluída!");
+            Console.WriteLine("Migraï¿½ï¿½o concluï¿½da!");
             break;
         }
         catch (Exception ex)
@@ -100,7 +101,7 @@ using (var scope = app.Services.CreateScope())
 
             if (attempt == maxRetries)
             {
-                Console.WriteLine("Número máximo de tentativas atingido.");
+                Console.WriteLine("Nï¿½mero mï¿½ximo de tentativas atingido.");
                 throw;
             }
 
