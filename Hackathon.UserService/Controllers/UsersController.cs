@@ -1,7 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Hackathon.UserService.DTOs;
+using Hackathon.UserService.Services;
 using Hackathon.UserService.Models;
-using Hackathon.UserService.Data;
+using Hackathon.UserService.Binders;
 
 namespace Hackathon.UserService.Controllers;
 
@@ -9,55 +10,49 @@ namespace Hackathon.UserService.Controllers;
 [Route("api/[controller]")]
 public class UsersController : ControllerBase
 {
-    private readonly AppDbContext _context;
-    public UsersController(AppDbContext context) => _context = context;
+    private readonly UsuarioService _usuarioService;
 
-    [HttpPost("medico")]
-    public IActionResult CriarMedico(CreateMedicoDto dto)
+    public UsersController(UsuarioService service)
     {
-        var medico = new Medico
-        {
-            Nome = dto.Nome,
-            CRM = dto.CRM,
-            Especialidade = dto.Especialidade
-        };
-
-        _context.Medicos.Add(medico);
-        _context.SaveChanges();
-        return Ok(medico);
+        _usuarioService = service;
     }
 
-    [HttpGet("medicos")]
-    public IActionResult ListarMedicos([FromQuery] string? especialidade)
+    [HttpPost("medico")]
+    public async Task<IActionResult> CriarMedico([FromBody] MedicoDto dto)
     {
-        var query = _context.Medicos.AsQueryable();
+        await _usuarioService.CriarMedicoAsync(dto);
+        return Ok("Médico criado com sucesso.");
+    }
 
-        if (!string.IsNullOrEmpty(especialidade))
-            query = query.Where(m => m.Especialidade == especialidade);
+    /// <summary>
+    /// Pode fazer chamadas por especialidade: /api/users/medicos?especialidade=cardiologia
+    /// </summary>
+    /// <param name="especialidade"></param>
+    /// <returns></returns>
+    [HttpGet("medicos")]
+    public async Task<IActionResult> ListarMedicos([ModelBinder(BinderType = typeof(EnumMemberModelBinder<EspecialidadeEnum>))] EspecialidadeEnum? especialidade)
+    {
+        var medicos = await _usuarioService.ListarMedicosAsync();
 
-        return Ok(query.ToList());
+        if (especialidade.HasValue) 
+            medicos = medicos.Where(m => m.Especialidade == especialidade.Value).ToList();
+
+        return Ok(medicos);
     }
 
     [HttpPost("paciente")]
-    public IActionResult CriarPaciente(CreatePacienteDto dto)
+    public async Task<IActionResult> CriarPaciente([FromBody] PacienteDto dto)
     {
-        var paciente = new Paciente
-        {
-            Nome = dto.Nome,
-            CPF = dto.CPF,
-            Email = dto.Email
-        };
-
-        _context.Pacientes.Add(paciente);
-        _context.SaveChanges();
-        return Ok(paciente);
+        await _usuarioService.CriarPacienteAsync(dto);
+        return Ok("Paciente criado com sucesso.");
     }
 
     [HttpGet("paciente/{cpf}")]
-    public IActionResult ObterPaciente(string cpf)
+    public async Task<IActionResult> ObterPaciente(string cpf)
     {
-        var paciente = _context.Pacientes.FirstOrDefault(p => p.CPF == cpf);
-        if (paciente == null) return NotFound();
-        return Ok(paciente);
+        var pacienteDto = await _usuarioService.ObterPacienteAsync(cpf);
+
+        if (pacienteDto == null) return NotFound();
+        return Ok(pacienteDto);
     }
 }

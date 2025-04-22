@@ -1,8 +1,9 @@
-﻿namespace Hackathon.UserService.Models;
+﻿using Hackathon.UserService.Models;
 
-public class Medico
+namespace Hackathon.UserService.DTOs;
+
+public class MedicoDto
 {
-    public Guid Id { get; set; }
     public string Nome { get; set; }
     public string CRM { get; set; }
     public EspecialidadeEnum Especialidade { get; set; }

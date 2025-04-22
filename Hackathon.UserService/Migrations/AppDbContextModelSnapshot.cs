@@ -32,9 +32,8 @@ namespace Hackathon.UserService.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Especialidade")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("Especialidade")
+                        .HasColumnType("int");
 
                     b.Property<string>("Nome")
                         .IsRequired()
