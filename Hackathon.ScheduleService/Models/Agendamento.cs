@@ -1,6 +1,6 @@
 ﻿namespace Hackathon.ScheduleService.Models;
 
-public class Schedule
+public class Agendamento
 {
     public Guid Id { get; set; }
     public string MedicoCRM { get; set; }

@@ -6,6 +6,6 @@ public class AppDbContext : DbContext
 {
     public AppDbContext(DbContextOptions<AppDbContext> options) : base(options) { }
 
-    public DbSet<Schedule> Schedules { get; set; }
+    public DbSet<Agendamento> Agendamentos { get; set; }
 }
 

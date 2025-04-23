@@ -22,7 +22,7 @@ namespace Hackathon.ScheduleService.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("Hackathon.ScheduleService.Models.Schedule", b =>
+            modelBuilder.Entity("Hackathon.ScheduleService.Models.Agendamento", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -40,7 +40,7 @@ namespace Hackathon.ScheduleService.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Schedules");
+                    b.ToTable("Agendamentos");
                 });
 #pragma warning restore 612, 618
         }

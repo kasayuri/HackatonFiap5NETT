@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Hackathon.ScheduleService.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20250416175122_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20250423134826_Initial")]
+    partial class Initial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -25,7 +25,7 @@ namespace Hackathon.ScheduleService.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("Hackathon.ScheduleService.Models.Schedule", b =>
+            modelBuilder.Entity("Hackathon.ScheduleService.Models.Agendamento", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -43,7 +43,7 @@ namespace Hackathon.ScheduleService.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Schedules");
+                    b.ToTable("Agendamentos");
                 });
 #pragma warning restore 612, 618
         }
