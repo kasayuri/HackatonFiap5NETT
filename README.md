@@ -22,6 +22,9 @@ A solução é composta por quatro projetos:
 - **JWT Bearer Authentication**: Protocolo de autenticação baseado em token.
 - **Prometheus (.NET prometheus-net)**: Sistema de monitoramento e alerta.
 
+## Diagrama da Arquitetura
+<img src="./img/diagram.png">
+
 ## Requisitos para executar no Visual Studio:
 
 - Visual Studio 2022+ (com suporte a .NET 8)
