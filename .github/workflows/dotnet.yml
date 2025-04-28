@@ -8,7 +8,10 @@ on:
   workflow_dispatch:
 
 env:
-  IMAGE_NAME: ghcr.io/${{ github.repository_owner }}/hackathon-auth
+  AUTH_IMAGE_NAME: ghcr.io/${{ github.repository_owner }}/hackathon-auth
+  USER_IMAGE_NAME: ghcr.io/${{ github.repository_owner }}/hackathon-user
+  CONSULTATION_IMAGE_NAME: ghcr.io/${{ github.repository_owner }}/hackathon-consultation
+  SCHEDULE_IMAGE_NAME: ghcr.io/${{ github.repository_owner }}/hackathon-schedule
 
 jobs:
   build-and-push:
@@ -38,4 +41,28 @@ jobs:
         context: ./Hackathon.AuthService
         file: ./Hackathon.AuthService/Dockerfile
         push: true
-        tags: ${{ env.IMAGE_NAME }}:latest
+        tags: ${{ env.AUTH_IMAGE_NAME }}:latest
+    
+    - name: Build and push Docker image
+      uses: docker/build-push-action@v5
+      with:
+        context: ./Hackathon.UserService
+        file: ./Hackathon.UserService/Dockerfile
+        push: true
+        tags: ${{ env.USER_IMAGE_NAME }}:latest
+        
+    - name: Build and push Docker image
+      uses: docker/build-push-action@v5
+      with:
+        context: ./Hackathon.ConsultationService
+        file: ./Hackathon.ConsultationService/Dockerfile
+        push: true
+        tags: ${{ env.CONSULTATION_IMAGE_NAME }}:latest
+        
+    - name: Build and push Docker image
+      uses: docker/build-push-action@v5
+      with:
+        context: ./Hackathon.ScheduleService
+        file: ./Hackathon.ScheduleService/Dockerfile
+        push: true
+        tags: ${{ env.SCHEDULE_IMAGE_NAME }}:latest
