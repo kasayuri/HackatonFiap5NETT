@@ -2,9 +2,9 @@ name: Build and Push to GHCR
 
 on:
   push:
-    branches: [ "master" ]
+    branches: [ "main" ]
   pull_request:
-    branches: [ "master" ]
+    branches: [ "main" ]
   workflow_dispatch:
 
 env:
@@ -35,7 +35,7 @@ jobs:
         username: ${{ github.actor }}
         password: ${{ secrets.GITHUB_TOKEN }}
 
-    - name: Build and push Docker image
+    - name: Build and push Docker image - AuthService
       uses: docker/build-push-action@v5
       with:
         context: ./Hackathon.AuthService
@@ -43,7 +43,7 @@ jobs:
         push: true
         tags: ${{ env.AUTH_IMAGE_NAME }}:latest
     
-    - name: Build and push Docker image
+    - name: Build and push Docker image - UserService
       uses: docker/build-push-action@v5
       with:
         context: ./Hackathon.UserService
@@ -51,7 +51,7 @@ jobs:
         push: true
         tags: ${{ env.USER_IMAGE_NAME }}:latest
         
-    - name: Build and push Docker image
+    - name: Build and push Docker image - ConsultationService
       uses: docker/build-push-action@v5
       with:
         context: ./Hackathon.ConsultationService
@@ -59,7 +59,7 @@ jobs:
         push: true
         tags: ${{ env.CONSULTATION_IMAGE_NAME }}:latest
         
-    - name: Build and push Docker image
+    - name: Build and push Docker image - ScheduleService
       uses: docker/build-push-action@v5
       with:
         context: ./Hackathon.ScheduleService
