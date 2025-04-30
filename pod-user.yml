@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: pod-user
+  labels:
+    app: pod-user
+spec:
+  containers:
+    - name: hackathon-user-service
+      image: ghcr.io/kasayuri/hackathon-user:latest
+      ports:
+        - containerPort: 5002
