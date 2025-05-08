@@ -1,0 +1,42 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: userservice-deployment
+  labels:
+    app: userservice
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: userservice
+  template:
+    metadata:
+      labels:
+        app: userservice
+    spec:
+      containers:
+        - name: hackathon-user-service
+          image: ghcr.io/kasayuri/hackathon-user:latest
+          ports:
+            - containerPort: 80
+          env:
+            - name: ASPNETCORE_ENVIRONMENT
+              value: "Production"
+            - name: ConnectionStrings__Default
+              valueFrom:
+                secretKeyRef:
+                  name: userservice-secrets
+                  key: db-connection
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: userservice-service
+spec:
+  selector:
+    app: userservice
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 80
+  type: LoadBalancer
