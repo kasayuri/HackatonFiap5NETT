@@ -8,6 +8,7 @@ metadata:
     io.kompose.service: hackathon-consultation-service
   name: hackathon-consultation-service
 spec:
+  type: NodePort # Adicionado para permitir o uso de nodePort. O default é ClusterIP, que não expõe o serviço fora do cluster.
   ports:
     - name: "5004"
       port: 5004

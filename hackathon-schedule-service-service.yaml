@@ -8,6 +8,7 @@ metadata:
     io.kompose.service: hackathon-schedule-service
   name: hackathon-schedule-service
 spec:
+  type: NodePort # Adicionado para permitir o uso de nodePort. O default é ClusterIP, que não expõe o serviço fora do cluster.
   ports:
     - name: "5003"
       port: 5003

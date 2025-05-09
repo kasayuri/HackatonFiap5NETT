@@ -8,9 +8,11 @@ metadata:
     io.kompose.service: sqlexpress
   name: sqlexpress
 spec:
+  type: NodePort # Adicionado para permitir o uso de nodePort. O default é ClusterIP, que não expõe o serviço fora do cluster.
   ports:
-    - name: "14330"
-      port: 14330
+    - name: "1433"
+      port: 1433
       targetPort: 1433
+      nodePort: 31433 # Porta externa no nó
   selector:
     io.kompose.service: sqlexpress
