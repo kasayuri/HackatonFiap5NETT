@@ -1,0 +1,43 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: kompose convert
+    kompose.version: 1.35.0 (HEAD)
+  labels:
+    io.kompose.service: sqlexpress
+  name: sqlexpress
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      io.kompose.service: sqlexpress
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      annotations:
+        kompose.cmd: kompose convert
+        kompose.version: 1.35.0 (HEAD)
+      labels:
+        io.kompose.service: sqlexpress
+    spec:
+      containers:
+        - env:
+            - name: ACCEPT_EULA
+              value: "Y"
+            - name: SA_PASSWORD
+              value: YourStrong!Passw0rd
+          image: mcr.microsoft.com/mssql/server:2022-latest
+          name: sqlexpress
+          ports:
+            - containerPort: 1433
+              protocol: TCP
+          volumeMounts:
+            - mountPath: /var/opt/mssql
+              name: sql-data
+      restartPolicy: Always
+      volumes:
+        - name: sql-data
+          persistentVolumeClaim:
+            claimName: sql-data

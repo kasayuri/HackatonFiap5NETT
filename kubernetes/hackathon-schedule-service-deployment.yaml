@@ -1,0 +1,41 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: kompose convert
+    kompose.version: 1.35.0 (HEAD)
+  labels:
+    io.kompose.service: hackathon-schedule-service
+  name: hackathon-schedule-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      io.kompose.service: hackathon-schedule-service
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      annotations:
+        kompose.cmd: kompose convert
+        kompose.version: 1.35.0 (HEAD)
+      labels:
+        io.kompose.service: hackathon-schedule-service
+    spec:
+      containers:
+        - env:
+            - name: ASPNETCORE_ENVIRONMENT
+              value: Production
+          image: ghcr.io/kasayuri/hackathon-schedule:latest
+          name: hackathon-schedule-service
+          ports:
+            - containerPort: 8080
+              protocol: TCP
+          volumeMounts:
+            - mountPath: /root/.aspnet/DataProtection-Keys
+              name: dataprotection-keys
+      restartPolicy: Always
+      volumes:
+        - name: dataprotection-keys
+          persistentVolumeClaim:
+            claimName: dataprotection-keys

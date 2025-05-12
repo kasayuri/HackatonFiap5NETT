@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: Service
+metadata:
+  annotations:
+    kompose.cmd: kompose convert
+    kompose.version: 1.35.0 (HEAD)
+  labels:
+    io.kompose.service: hackathon-consultation-service
+  name: hackathon-consultation-service
+spec:
+  type: NodePort # Adicionado para permitir o uso de nodePort. O default é ClusterIP, que não expõe o serviço fora do cluster.
+  ports:
+    - name: "5004"
+      port: 5004
+      targetPort: 8080
+  selector:
+    io.kompose.service: hackathon-consultation-service

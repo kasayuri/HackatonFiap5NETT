@@ -3,18 +3,20 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hackathon.AuthService", "Hackathon.AuthService\Hackathon.AuthService.csproj", "{9A5E1DCC-0F1B-4CB6-BAFE-3A6C0FAB2149}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Hackathon.AuthService", "Hackathon.AuthService\Hackathon.AuthService.csproj", "{9A5E1DCC-0F1B-4CB6-BAFE-3A6C0FAB2149}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hackathon.UserService", "Hackathon.UserService\Hackathon.UserService.csproj", "{F1117A62-5E8A-4CDB-8404-5AAD110259EA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Hackathon.UserService", "Hackathon.UserService\Hackathon.UserService.csproj", "{F1117A62-5E8A-4CDB-8404-5AAD110259EA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hackathon.ScheduleService", "Hackathon.ScheduleService\Hackathon.ScheduleService.csproj", "{4F90991C-8449-4570-B98D-EA861A7F84DC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Hackathon.ScheduleService", "Hackathon.ScheduleService\Hackathon.ScheduleService.csproj", "{4F90991C-8449-4570-B98D-EA861A7F84DC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hackathon.ConsultationService", "Hackathon.ConsultationService\Hackathon.ConsultationService.csproj", "{0CBD0E5E-C959-4596-89BC-AB499AE5B3C1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Hackathon.ConsultationService", "Hackathon.ConsultationService\Hackathon.ConsultationService.csproj", "{0CBD0E5E-C959-4596-89BC-AB499AE5B3C1}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{8EC462FD-D22E-90A8-E5CE-7E832BA40C5D}"
 	ProjectSection(SolutionItems) = preProject
 		docker-compose.yml = docker-compose.yml
+		pod-user.yml = pod-user.yml
 		prometheus.yml = prometheus.yml
+		svc-user.yml = svc-user.yml
 	EndProjectSection
 EndProject
 Global

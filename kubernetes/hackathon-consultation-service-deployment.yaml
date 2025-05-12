@@ -1,0 +1,41 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: kompose convert
+    kompose.version: 1.35.0 (HEAD)
+  labels:
+    io.kompose.service: hackathon-consultation-service
+  name: hackathon-consultation-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      io.kompose.service: hackathon-consultation-service
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      annotations:
+        kompose.cmd: kompose convert
+        kompose.version: 1.35.0 (HEAD)
+      labels:
+        io.kompose.service: hackathon-consultation-service
+    spec:
+      containers:
+        - env:
+            - name: ASPNETCORE_ENVIRONMENT
+              value: Production
+          image: ghcr.io/kasayuri/hackathon-consultation:latest
+          name: hackathon-consultation-service
+          ports:
+            - containerPort: 8080
+              protocol: TCP
+          volumeMounts:
+            - mountPath: /root/.aspnet/DataProtection-Keys
+              name: dataprotection-keys
+      restartPolicy: Always
+      volumes:
+        - name: dataprotection-keys
+          persistentVolumeClaim:
+            claimName: dataprotection-keys
